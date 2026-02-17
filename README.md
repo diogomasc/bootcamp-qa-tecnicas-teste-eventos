@@ -16,7 +16,6 @@ Sistema de gerenciamento de eventos que permite criar eventos, enviar convites, 
 - **Maven 3.11.0**
 - **JUnit 5.10.1** - Framework de testes
 - **AssertJ 3.24.2** - Asserções fluentes para testes
-- **Git** - Controle de versão com commits semânticos
 
 ## 🏗️ Arquitetura e POO
 
@@ -240,23 +239,7 @@ Todo o projeto foi desenvolvido seguindo o ciclo **Red-Green-Refactor**:
 1. **🔴 RED**: Escrever teste que falha
 2. **🟢 GREEN**: Implementar código mínimo para passar
 3. **🔵 REFACTOR**: Melhorar código mantendo testes verdes
-4. **✅ COMMIT**: Commit semântico em português sem acentuação
-
-## 💾 Histórico de Commits
-
-O projeto possui commits semânticos organizados:
-
-```bash
-git log --oneline
-```
-
-Exemplos de commits:
-
-- `feat: cria enum StatusPercentual`
-- `test: adiciona testes de boundary para Evento`
-- `feat: implementa classe Evento com validacoes`
-- `refactor: melhora implementacao de ValidadorConvite`
-- `chore: configura dependencias junit e assertj no pom.xml`
+4. **✅ COMMIT**: Commit semântico em português
 
 ## 👨‍💻 Autor
 
@@ -265,7 +248,7 @@ Bootcamp Quality Assurance
 
 ## 📄 Licença
 
-Este projeto foi desenvolvido para fins educacionais como parte do Bootcamp de QA.
+Este projeto foi desenvolvido para fins educacionais como parte do Bootcamp Quality Assurance..
 
 ---
 
