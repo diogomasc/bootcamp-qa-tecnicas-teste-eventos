@@ -241,11 +241,6 @@ Todo o projeto foi desenvolvido seguindo o ciclo **Red-Green-Refactor**:
 3. **🔵 REFACTOR**: Melhorar código mantendo testes verdes
 4. **✅ COMMIT**: Commit semântico em português
 
-## 👨‍💻 Autor
-
-**Diogo Mascarenhas Ferreira Santos**  
-Bootcamp Quality Assurance
-
 ## 📄 Licença
 
 Este projeto foi desenvolvido para fins educacionais como parte do Bootcamp Quality Assurance..
@@ -263,3 +258,8 @@ Este projeto foi desenvolvido para fins educacionais como parte do Bootcamp Qual
 - ✅ Git com Commits Semânticos
 - ✅ Maven & JUnit 5
 - ✅ AssertJ (Asserções Fluentes)
+
+## 👨‍💻 Autor
+
+**Diogo Mascarenhas Ferreira Santos**  
+Bootcamp Quality Assurance
