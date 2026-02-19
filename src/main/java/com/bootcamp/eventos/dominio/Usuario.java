@@ -1,31 +1,17 @@
 package com.bootcamp.eventos.dominio;
 
 /**
- * Classe abstrata representando um usuário do sistema.
- * Pode ser estendida por Organizador ou outros tipos de usuários.
+ * Interface selada representando um usuário do sistema.
+ * Implementada por {@link Organizador} e outros tipos de usuários.
+ * Sealed garante que apenas os tipos permitidos implementem esta interface.
  */
-public abstract class Usuario {
-  protected final String id;
-  protected final String nome;
-  protected final String email;
+public sealed interface Usuario permits Organizador, UsuarioComum {
 
-  public Usuario(String id, String nome, String email) {
-    this.id = id;
-    this.nome = nome;
-    this.email = email;
-  }
+  String id();
 
-  public abstract boolean isOrganizador();
+  String nome();
 
-  public String getId() {
-    return id;
-  }
+  String email();
 
-  public String getNome() {
-    return nome;
-  }
-
-  public String getEmail() {
-    return email;
-  }
+  boolean isOrganizador();
 }

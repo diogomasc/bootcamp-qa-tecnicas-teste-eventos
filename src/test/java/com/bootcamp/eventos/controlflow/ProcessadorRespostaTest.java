@@ -52,8 +52,8 @@ class ProcessadorRespostaTest {
 
     ResultadoProcessamento resultado = processador.processarResposta(convite, resposta);
 
-    assertThat(resultado.isSucesso()).isFalse();
-    assertThat(resultado.getMensagem()).isEqualTo("Convite já foi respondido anteriormente");
+    assertThat(resultado.sucesso()).isFalse();
+    assertThat(resultado.mensagem()).isEqualTo("Convite já foi respondido anteriormente");
   }
 
   @Test
@@ -68,8 +68,8 @@ class ProcessadorRespostaTest {
 
     ResultadoProcessamento resultado = processador.processarResposta(convite, resposta);
 
-    assertThat(resultado.isSucesso()).isTrue();
-    assertThat(resultado.getMensagem()).isEqualTo("Participação confirmada com sucesso");
+    assertThat(resultado.sucesso()).isTrue();
+    assertThat(resultado.mensagem()).isEqualTo("Participação confirmada com sucesso");
     assertThat(convite.foiRespondido()).isTrue();
     assertThat(convite.foiAceito()).isTrue();
   }
@@ -86,8 +86,8 @@ class ProcessadorRespostaTest {
 
     ResultadoProcessamento resultado = processador.processarResposta(convite, resposta);
 
-    assertThat(resultado.isSucesso()).isFalse();
-    assertThat(resultado.getMensagem()).isEqualTo("Evento já está lotado");
+    assertThat(resultado.sucesso()).isFalse();
+    assertThat(resultado.mensagem()).isEqualTo("Evento já está lotado");
     assertThat(convite.foiRecusado()).isTrue();
   }
 
@@ -102,8 +102,8 @@ class ProcessadorRespostaTest {
 
     ResultadoProcessamento resultado = processador.processarResposta(convite, resposta);
 
-    assertThat(resultado.isSucesso()).isTrue();
-    assertThat(resultado.getMensagem()).isEqualTo("Recusa registrada");
+    assertThat(resultado.sucesso()).isTrue();
+    assertThat(resultado.mensagem()).isEqualTo("Recusa registrada");
     assertThat(convite.foiRecusado()).isTrue();
   }
 
@@ -119,7 +119,7 @@ class ProcessadorRespostaTest {
 
     ResultadoProcessamento resultado = processador.processarResposta(convite, resposta);
 
-    assertThat(resultado.isSucesso()).isTrue();
+    assertThat(resultado.sucesso()).isTrue();
     assertThat(convite.foiAceito()).isTrue();
   }
 

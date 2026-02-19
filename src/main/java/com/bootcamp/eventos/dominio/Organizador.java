@@ -1,14 +1,15 @@
 package com.bootcamp.eventos.dominio;
 
 /**
- * Classe representando um organizador de eventos.
+ * Record representando um organizador de eventos.
  * Organizadores têm permissões especiais para criar e editar eventos.
+ * Implementa {@link Usuario} como tipo selado.
+ *
+ * @param id    Identificador único do organizador
+ * @param nome  Nome do organizador
+ * @param email Email do organizador
  */
-public class Organizador extends Usuario {
-
-  public Organizador(String id, String nome, String email) {
-    super(id, nome, email);
-  }
+public record Organizador(String id, String nome, String email) implements Usuario {
 
   @Override
   public boolean isOrganizador() {

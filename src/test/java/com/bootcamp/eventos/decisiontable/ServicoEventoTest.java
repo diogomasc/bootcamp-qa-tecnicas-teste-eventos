@@ -4,6 +4,7 @@ import com.bootcamp.eventos.dominio.Evento;
 import com.bootcamp.eventos.dominio.Organizador;
 import com.bootcamp.eventos.dominio.Participante;
 import com.bootcamp.eventos.dominio.Usuario;
+import com.bootcamp.eventos.dominio.UsuarioComum;
 import com.bootcamp.eventos.dominio.enums.TipoPermissao;
 import com.bootcamp.eventos.dto.PermissaoEdicao;
 import com.bootcamp.eventos.servico.ServicoEvento;
@@ -46,7 +47,7 @@ class ServicoEventoTest {
     PermissaoEdicao permissao = servico.verificarPermissaoEdicao(usuario, evento);
 
     // Assert
-    assertThat(permissao.getTipo()).isEqualTo(permissaoEsperada);
+    assertThat(permissao.tipo()).isEqualTo(permissaoEsperada);
   }
 
   static Stream<Arguments> cenariosDeEdicaoEvento() {
@@ -69,12 +70,7 @@ class ServicoEventoTest {
   }
 
   private Usuario criarUsuarioComum() {
-    return new Usuario("USR-001", "Maria Santos", "maria@example.com") {
-      @Override
-      public boolean isOrganizador() {
-        return false;
-      }
-    };
+    return new UsuarioComum("USR-001", "Maria Santos", "maria@example.com");
   }
 
   private Evento criarEvento(boolean eventoFuturo) {

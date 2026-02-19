@@ -9,11 +9,12 @@ import java.util.List;
 /**
  * Classe principal representando um evento.
  * Gerencia participantes, validações de data e limites.
+ * Campos não são final pois o evento pode ser editado posteriormente.
  */
 public class Evento {
-  private final String nome;
-  private final Integer limiteParticipantes; // null = sem limite
-  private final LocalDateTime data;
+  private String nome;
+  private Integer limiteParticipantes; // null = sem limite
+  private LocalDateTime data;
   private final List<Participante> participantes;
 
   public Evento(String nome, Integer limiteParticipantes, LocalDateTime data) {
@@ -85,12 +86,25 @@ public class Evento {
     return data;
   }
 
+  public void setData(LocalDateTime data) {
+    validarData(data);
+    this.data = data;
+  }
+
   public String getNome() {
     return nome;
   }
 
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
+
   public Integer getLimiteParticipantes() {
     return limiteParticipantes;
+  }
+
+  public void setLimiteParticipantes(Integer limiteParticipantes) {
+    this.limiteParticipantes = limiteParticipantes;
   }
 
   private void validarData(LocalDateTime data) {

@@ -22,12 +22,11 @@ Sistema de gerenciamento de eventos que permite criar eventos, enviar convites, 
 O projeto demonstra conceitos avançados de Programação Orientada a Objetos:
 
 - ✅ **Classes** (`Evento`, `Convite`, `ProcessadorResposta`, etc.)
-- ✅ **Classes Abstratas** (`Usuario`)
-- ✅ **Herança** (`Organizador` extends `Usuario`)
-- ✅ **Interfaces** (`ServicoEmail`)
-- ✅ **Records** (`Participante`, `ResultadoValidacao`, `ResultadoProcessamento`, `PermissaoEdicao`)
+- ✅ **Interfaces Seladas** (`Usuario` — sealed interface)
+- ✅ **Records** (`Organizador`, `UsuarioComum`, `Participante`, `RespostaConvite`, `ResultadoValidacao`, `ResultadoProcessamento`, `PermissaoEdicao`)
 - ✅ **Enums** (`StatusPercentual`, `TipoPermissao`)
 - ✅ **Exceptions Customizadas** (`EventoLotadoException`)
+- ✅ **Interfaces** (`ServicoEmail`)
 
 ### Estrutura de Pacotes
 
@@ -37,8 +36,10 @@ src/main/java/com/bootcamp/eventos/
 │   ├── Evento.java
 │   ├── Convite.java
 │   ├── Participante.java (record)
-│   ├── Usuario.java (abstract)
-│   ├── Organizador.java
+│   ├── RespostaConvite.java (record)
+│   ├── Usuario.java (sealed interface)
+│   ├── Organizador.java (record)
+│   ├── UsuarioComum.java (record)
 │   └── enums/
 │       ├── StatusPercentual.java
 │       └── TipoPermissao.java
@@ -66,6 +67,172 @@ src/test/java/com/bootcamp/eventos/
 └── controlflow/         # Testes de Fluxo de Controle
     ├── ProcessadorRespostaTest.java
     └── CalculadorStatusEventoTest.java
+```
+
+### Diagrama de Classes
+
+```mermaid
+classDiagram
+    direction TB
+
+    class Usuario {
+        <<sealed interface>>
+        +id() String
+        +nome() String
+        +email() String
+        +isOrganizador() boolean
+    }
+
+    class Organizador {
+        <<record>>
+        +String id
+        +String nome
+        +String email
+        +isOrganizador() boolean
+    }
+
+    class UsuarioComum {
+        <<record>>
+        +String id
+        +String nome
+        +String email
+        +isOrganizador() boolean
+    }
+
+    class Evento {
+        -String nome
+        -Integer limiteParticipantes
+        -LocalDateTime data
+        -List~Participante~ participantes
+        +confirmarParticipante(Participante) boolean
+        +adicionarParticipante(Participante) void
+        +temLimite() boolean
+        +estaLotado() boolean
+        +getNumeroConfirmados() int
+        +calcularPercentualConfirmados() int
+    }
+
+    class Participante {
+        <<record>>
+        +String nome
+        +String observacao
+    }
+
+    class Convite {
+        -Evento evento
+        -String token
+        -LocalDateTime dataExpiracao
+        -boolean respondido
+        -boolean aceito
+        -Participante participante
+        -String motivoRecusa
+        +foiRespondido() boolean
+        +foiAceito() boolean
+        +foiRecusado() boolean
+        +marcarComoAceito(Participante) void
+        +marcarComoRecusado(String) void
+    }
+
+    class RespostaConvite {
+        <<record>>
+        +boolean aceitou
+        +String nome
+        +String observacao
+        +getMotivoRecusa() String
+        +getObservacao() String
+    }
+
+    class StatusPercentual {
+        <<enum>>
+        SEM_LIMITE
+        LOTADO
+        QUASE_LOTADO
+        BOA_ADESAO
+        ABERTO_COM_CONFIRMACOES
+        ABERTO_SEM_CONFIRMACOES
+    }
+
+    class TipoPermissao {
+        <<enum>>
+        COMPLETA
+        LIMITADA
+        BLOQUEADA
+        NEGADA
+    }
+
+    class ResultadoValidacao {
+        <<record>>
+        +boolean valido
+        +String mensagemErro
+    }
+
+    class ResultadoProcessamento {
+        <<record>>
+        +boolean sucesso
+        +String mensagem
+    }
+
+    class PermissaoEdicao {
+        <<record>>
+        +TipoPermissao tipo
+        +String justificativa
+    }
+
+    class ValidadorConvite {
+        +validar(Convite) ResultadoValidacao
+    }
+
+    class ProcessadorResposta {
+        +processarResposta(Convite, RespostaConvite) ResultadoProcessamento
+    }
+
+    class CalculadorStatusEvento {
+        +calcularStatusPercentualConfirmados(Evento) StatusPercentual
+    }
+
+    class ServicoEvento {
+        +verificarPermissaoEdicao(Usuario, Evento) PermissaoEdicao
+    }
+
+    class ServicoEmail {
+        <<interface>>
+        +enviarConvite(String, Convite) void
+        +enviarConfirmacao(String, Evento) void
+        +enviarNotificacaoAlteracao(String, Evento) void
+    }
+
+    class ServicoEmailFake {
+        +enviarConvite(String, Convite) void
+        +enviarConfirmacao(String, Evento) void
+        +enviarNotificacaoAlteracao(String, Evento) void
+        +getQuantidadeEmailsEnviados() int
+        +limpar() void
+    }
+
+    class EventoLotadoException {
+        <<RuntimeException>>
+    }
+
+    Usuario <|.. Organizador : implements
+    Usuario <|.. UsuarioComum : implements
+    Evento "1" *-- "*" Participante : participantes
+    Evento ..> EventoLotadoException : throws
+    Convite --> "1" Evento : evento
+    Convite --> "0..1" Participante : participante
+    ValidadorConvite ..> Convite : valida
+    ValidadorConvite ..> ResultadoValidacao : retorna
+    ProcessadorResposta ..> Convite : processa
+    ProcessadorResposta ..> RespostaConvite : recebe
+    ProcessadorResposta ..> ResultadoProcessamento : retorna
+    CalculadorStatusEvento ..> Evento : analisa
+    CalculadorStatusEvento ..> StatusPercentual : retorna
+    ServicoEvento ..> Usuario : verifica
+    ServicoEvento ..> Evento : gerencia
+    ServicoEvento ..> PermissaoEdicao : retorna
+    PermissaoEdicao --> TipoPermissao : tipo
+    ServicoEmail <|.. ServicoEmailFake : implements
+    ServicoEmailFake ..> Convite : usa
+    ServicoEmailFake ..> Evento : usa
 ```
 
 ## 🧪 Técnicas de Teste Implementadas
@@ -249,7 +416,7 @@ Este projeto foi desenvolvido para fins educacionais como parte do Bootcamp Qual
 
 **🎓 Conceitos Demonstrados:**
 
-- ✅ POO (Classes, Abstratas, Interfaces, Records, Enums, Herança)
+- ✅ POO (Sealed Interfaces, Records, Enums, Herança)
 - ✅ TDD (Test-Driven Development)
 - ✅ Boundary Testing (Análise de Valor Limite)
 - ✅ Decision Table Testing (Tabela de Decisão)

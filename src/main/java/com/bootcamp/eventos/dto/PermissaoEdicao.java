@@ -10,12 +10,4 @@ import com.bootcamp.eventos.dominio.enums.TipoPermissao;
  * @param justificativa Justificativa da permissão concedida ou negada
  */
 public record PermissaoEdicao(TipoPermissao tipo, String justificativa) {
-
-  public TipoPermissao getTipo() {
-    return tipo;
-  }
-
-  public String getJustificativa() {
-    return justificativa;
-  }
 }

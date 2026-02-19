@@ -7,12 +7,4 @@ package com.bootcamp.eventos.dto;
  * @param mensagem Mensagem descrevendo o resultado
  */
 public record ResultadoProcessamento(boolean sucesso, String mensagem) {
-
-  public boolean isSucesso() {
-    return sucesso;
-  }
-
-  public String getMensagem() {
-    return mensagem;
-  }
 }

@@ -17,12 +17,4 @@ public record RespostaConvite(boolean aceitou, String nome, String observacao) {
   public String getObservacao() {
     return aceitou ? observacao : null;
   }
-
-  public boolean isAceitou() {
-    return aceitou;
-  }
-
-  public String getNome() {
-    return nome;
-  }
 }

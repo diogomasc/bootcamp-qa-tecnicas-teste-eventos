@@ -45,9 +45,9 @@ class ValidadorConviteTest {
     ResultadoValidacao resultado = validador.validar(convite);
 
     // Assert
-    assertThat(resultado.isValido()).isEqualTo(esperado.devePermitir);
+    assertThat(resultado.valido()).isEqualTo(esperado.devePermitir);
     if (!esperado.devePermitir) {
-      assertThat(resultado.getMensagemErro()).isEqualTo(esperado.mensagem);
+      assertThat(resultado.mensagemErro()).isEqualTo(esperado.mensagem);
     }
   }
 

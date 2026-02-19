@@ -26,7 +26,7 @@ public class ProcessadorResposta {
     }
 
     // Processa aceitação
-    if (resposta.isAceitou()) {
+    if (resposta.aceitou()) {
       Evento evento = convite.getEvento();
 
       // Verifica se ainda há vagas
@@ -37,7 +37,7 @@ public class ProcessadorResposta {
 
       // Confirma participação
       Participante participante = new Participante(
-          resposta.getNome(),
+          resposta.nome(),
           resposta.getObservacao());
 
       evento.adicionarParticipante(participante);

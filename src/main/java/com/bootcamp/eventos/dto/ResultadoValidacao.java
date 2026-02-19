@@ -7,12 +7,4 @@ package com.bootcamp.eventos.dto;
  * @param mensagemErro Mensagem descrevendo o erro, ou null se válido
  */
 public record ResultadoValidacao(boolean valido, String mensagemErro) {
-
-  public boolean isValido() {
-    return valido;
-  }
-
-  public String getMensagemErro() {
-    return mensagemErro;
-  }
 }
